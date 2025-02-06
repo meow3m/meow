@@ -1,0 +1,17 @@
+import easygui
+
+while True:
+    choice = easygui.buttonbox("Оберіть дію:", "Читання файлу", ["Відкрити файл", "Вийти"])
+    
+    if choice == "Відкрити файл":
+        file_path = easygui.fileopenbox(title="Виберіть файл")
+
+        if file_path:
+            try:
+                with open(file_path, "r", encoding="utf-8") as file:
+                    easygui.msgbox(file.read(), title="Вміст файлу")
+            except Exception as e:
+                easygui.msgbox(f"Помилка: {e}", title="Помилка")
+    
+    elif choice == "Вийти":
+        break
