@@ -1,0 +1,30 @@
+import random
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, CallbackContext
+
+# Список бібліотек, які можна вивчати
+libraries = [
+    "NumPy", "Pandas", "Matplotlib", "Requests", "BeautifulSoup",
+    "TensorFlow", "Flask", "Django", "Scikit-learn", "Pygame"
+]
+
+# Функція, яка випадково вибирає бібліотеку
+def choose_library(update: Update, context: CallbackContext) -> None:
+    selected_library = random.choice(libraries)
+    update.message.reply_text(f"На цьому тижні ти можеш вивчити бібліотеку: {selected_library}.")
+
+# Функція для старту бота
+def start(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text("Привіт! Я допоможу тобі обрати бібліотеку для вивчення. Напиши /choose_library!")
+
+def main():
+    TOKEN = "8000997725:AAFrG1931ce8IRVcDqmf6WNklAoIkBG-0S4" #не взламуйте пжпжпжж
+
+    updater = Updater(TOKEN)
+    dispatcher = updater.dispatcher
+
+    # Додаємо обробку команд
+    dispatcher.add_handler(CommandHandler("start", start)) 
+    dispatcher.add_handler(CommandHandler("choose_library", choose_library)) # Вибір бібліотеки
+
+    # Запускаємо бота
