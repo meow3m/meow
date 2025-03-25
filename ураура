@@ -1,0 +1,41 @@
+import datetime
+import telebot
+
+TOKEN = "8000997725:AAFrG1931ce8IRVcDqmf6WNklAoIkBG-0S4"
+bot = telebot.TeleBot(TOKEN)
+
+# Приклад бази днів народження
+birthdays = {
+    "alex": {
+        "date": datetime.date(2025, 3, 25),
+        "wishlist": "https://www.amazon.com/hz/wishlist/ls/123456789"
+    },
+    "maria": {
+        "date": datetime.date(2025, 5, 10),
+        "wishlist": "https://www.etsy.com/people/maria/wishlist"
+    }
+}
+
+# Функція перевірки днів народження
+def check_birthdays():
+    today = datetime.date.today()
+    for user, info in birthdays.items():
+        bday = info['date']
+        if bday.month == today.month and bday.day == today.day:
+            send_birthday_reminder(user, info)
+
+# Функція відправки нагадування
+def send_birthday_reminder(user, info):
+    reminder_text = (
+        f"🎉 Сьогодні особливий день! \n"
+        f"🥳 День народження у @{user}! 🎂\n"
+        f"✨ Не забудь привітати та зробити цей день незабутнім! 💌\n"
+        f"🎁 Ось список бажань: {info['wishlist']}\n"
+        f"💫 Нехай цей день буде наповнений щастям, подарунками та чудовими моментами! 🎈🎊"
+    )
+    bot.send_message(YOUR_CHAT_ID, reminder_text)  # Замініть YOUR_CHAT_ID на реальний ID чату
+
+# Запуск перевірки
+check_birthdays()
+
+bot.polling()
